@@ -67,7 +67,7 @@ class FileLibraryProvider(backend.LibraryProvider):
             if not self._show_dotfiles and dir_entry.startswith(b'.'):
                 continue
 
-            ext = '.' + uri.rsplit('.', 1)[1]).lower()
+            ext = ('.' + uri.rsplit('.', 1)[1]).lower()
             if (self._included_file_extensions and
                     not ext in self._included_file_extensions:
                 continue

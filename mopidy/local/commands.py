@@ -120,7 +120,7 @@ class ScanCommand(commands.Command):
         for abspath in file_mtimes:
             relpath = os.path.relpath(abspath, media_dir)
             uri = translator.path_to_local_track_uri(relpath)
-            ext = '.' + uri.rsplit('.', 1)[1]).lower()
+            ext = ('.' + uri.rsplit('.', 1)[1]).lower()
 
             if b'/.' in relpath or relpath.startswith(b'.'):
                 logger.debug('Skipped %s: Hidden directory/file.', uri)
