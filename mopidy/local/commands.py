@@ -77,9 +77,6 @@ class ScanCommand(commands.Command):
         excluded_file_extensions = config['local']['excluded_file_extensions']
         excluded_file_extensions = tuple(
             file_ext.lower() for file_ext in excluded_file_extensions)
-        included_file_extensions = config['local']['included_file_extensions']
-        included_file_extensions = tuple(
-            file_ext.lower() for file_ext in included_file_extensions)
 
         library = _get_library(args, config)
         if library is None:
@@ -120,14 +117,11 @@ class ScanCommand(commands.Command):
         for abspath in file_mtimes:
             relpath = os.path.relpath(abspath, media_dir)
             uri = translator.path_to_local_track_uri(relpath)
-            ext = '.' + uri.rsplit('.', 1)[1]).lower()
 
             if b'/.' in relpath:
                 logger.debug('Skipped %s: Hidden directory/file.', uri)
-            elif included_file_extensions and
-                    ext not in included_file_extensions:
-                logger.debug('Skipped %s: File extension not included.', uri)
-            elif ext in excluded_file_extensions:
+            elif ('.' + uri.rsplit('.', 1)[1]).lower() \
+                    in excluded_file_extensions:
                 logger.debug('Skipped %s: File extension excluded.', uri)
             elif uri not in uris_in_library:
                 uris_to_update.add(uri)
