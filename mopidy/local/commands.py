@@ -76,7 +76,7 @@ class ScanCommand(commands.Command):
         flush_threshold = config['local']['scan_flush_threshold']
         excluded_file_extensions = config['local']['excluded_file_extensions']
         excluded_file_extensions = tuple(
-            bytes(file_ext.lower()) for file_ext in excluded_file_extensions)
+            file_ext.lower() for file_ext in excluded_file_extensions)
 
         library = _get_library(args, config)
         if library is None:
@@ -120,7 +120,8 @@ class ScanCommand(commands.Command):
 
             if b'/.' in relpath or relpath.startswith(b'.'):
                 logger.debug('Skipped %s: Hidden directory/file.', uri)
-            elif relpath.lower().endswith(excluded_file_extensions):
+            elif ('.' + uri.rsplit('.', 1)[1]).lower() \
+                    in excluded_file_extensions:
                 logger.debug('Skipped %s: File extension excluded.', uri)
             elif uri not in uris_in_library:
                 uris_to_update.add(uri)
