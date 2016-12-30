@@ -65,7 +65,7 @@ class FileLibraryProvider(backend.LibraryProvider):
                 continue
 
             if (self._excluded_file_extensions and
-                    (b'.' + dir_entry.rsplit('.', 1)[1]).lower() \
+                    ('.' + uri.rsplit('.', 1)[1]).lower() \
                             in self._excluded_file_extensions:
                 continue
 
