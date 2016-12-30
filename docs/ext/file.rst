@@ -40,6 +40,12 @@ See :ref:`config` for general help on configuring Mopidy.
     File extensions to exclude when scanning the media directory. Values
     should be separated by either comma or newline.
 
+.. confval:: file/included_file_extensions
+
+    File extensions to include when scanning the media directory. Takes
+    priority over excluded_file_extensions. Values should be separated by
+    either comma or newline.
+
 .. confval:: file/follow_symlinks
 
     Whether to follow symbolic links found in :confval:`file/media_dirs`.

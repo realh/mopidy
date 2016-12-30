@@ -35,6 +35,9 @@ class FileLibraryProvider(backend.LibraryProvider):
         super(FileLibraryProvider, self).__init__(backend)
         self._media_dirs = list(self._get_media_dirs(config))
         self._show_dotfiles = config['file']['show_dotfiles']
+        self._included_file_extensions = tuple(
+            bytes(file_ext.lower())
+            for file_ext in config['file']['included_file_extensions'])
         self._excluded_file_extensions = tuple(
             bytes(file_ext.lower())
             for file_ext in config['file']['excluded_file_extensions'])
@@ -64,9 +67,13 @@ class FileLibraryProvider(backend.LibraryProvider):
             if not self._show_dotfiles and dir_entry.startswith(b'.'):
                 continue
 
+            ext = '.' + uri.rsplit('.', 1)[1]).lower()
+            if (self._included_file_extensions and
+                    not ext in self._included_file_extensions:
+                continue
+
             if (self._excluded_file_extensions and
-                    (b'.' + dir_entry.rsplit('.', 1)[1]).lower() \
-                            in self._excluded_file_extensions:
+                    ext in self._excluded_file_extensions:
                 continue
 
             if os.path.islink(child_path) and not self._follow_symlinks:

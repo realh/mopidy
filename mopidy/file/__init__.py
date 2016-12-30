@@ -23,6 +23,7 @@ class Extension(ext.Extension):
         schema = super(Extension, self).get_config_schema()
         schema['media_dirs'] = config.List(optional=True)
         schema['excluded_file_extensions'] = config.List(optional=True)
+        schema['included_file_extensions'] = config.List(optional=True)
         schema['show_dotfiles'] = config.Boolean(optional=True)
         schema['follow_symlinks'] = config.Boolean(optional=True)
         schema['metadata_timeout'] = config.Integer(optional=True)
